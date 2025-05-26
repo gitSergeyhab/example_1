@@ -62,6 +62,12 @@ export const getTariffColumns = (): TableColumnsType<Tariff> => [
     sorter: (a, b) => a.price - b.price,
   },
   {
+    title: 'Валюта',
+    dataIndex: 'currency',
+    key: 'currency',
+    sorter: (a, b) => a.currency.localeCompare(b.currency),
+  },
+  {
     title: 'Активность',
     dataIndex: 'isActive',
     key: 'isActive',

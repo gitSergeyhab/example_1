@@ -5,28 +5,35 @@ import {
   type FieldValues,
   type Path,
 } from 'react-hook-form';
+import type { SizeType } from '../../types/ui';
 
-export interface FormInputProps<T extends FieldValues> {
+export interface InputControllerProps<T extends FieldValues> {
   control: Control<T>;
   name: Path<T>;
   error?: string;
   type?: string;
   label?: string;
+  size?: SizeType;
+  disabled?: boolean;
+  placeholder?: string;
+  showSearch?: boolean;
 }
-export const FormInput = <T extends FieldValues>({
+export const InputController = <T extends FieldValues>({
   control,
   name,
   error,
   type,
   label,
-}: FormInputProps<T>) => {
+}: InputControllerProps<T>) => {
   return (
     <>
       <label>{label}</label>
       <Controller
         name={name}
         control={control}
-        render={({ field }) => <Input type={type} {...field} />}
+        render={({ field }) => (
+          <Input type={type} {...field} status={error ? 'error' : undefined} />
+        )}
       />
       <p>{error || 'nope'}</p>
     </>

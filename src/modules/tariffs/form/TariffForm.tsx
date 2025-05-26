@@ -1,8 +1,10 @@
 import { Button } from 'antd';
-import { FormInput } from '../../../components/formControls/FormInput';
-import { useAppForm } from '../../../hooks/useAppForm';
+import { InputController } from '@/components/formControls/InputController';
+import { useAppForm } from '@/hooks/useAppForm';
 import { tariffSchema, type TariffSchemaType } from '../form/tariffSchema';
 import type { FC } from 'react';
+import { SelectController } from '@/components/formControls/SelectController';
+import { SwitchController } from '@/components/formControls/SwitchController';
 
 export interface TariffFormProps {
   isNew?: boolean;
@@ -25,32 +27,46 @@ export const TariffForm: FC<TariffFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormInput
+      <InputController
         control={control}
         name="name"
         error={errors.name?.message}
         label="Название"
       />
-      <FormInput
+      <InputController
         control={control}
         name="description"
         error={errors.description?.message}
         label="Описание"
       />
-      <FormInput
+      <InputController
         control={control}
         name="price"
         error={errors.price?.message}
         type="number"
         label="Цена"
       />
-      {/* <FormInput control={control} name="currency" error={errors.currency?.message} /> */}
-      {/* <FormInput control={control} name="features" error={errors.features?.message} /> */}
-      {/* <FormInput control={control} name="isActive" error={errors.isActive?.message} /> */}
+      <SelectController
+        control={control}
+        name="currency"
+        label="Валюта"
+        error={errors.currency?.message}
+        options={[
+          { label: 'RUB', value: 'RUB' },
+          { label: 'USD', value: 'USD' },
+        ]}
+      />
+      <SwitchController
+        control={control}
+        name="isActive"
+        error={errors.isActive?.message}
+        label="Активен"
+      />
       <Button
         htmlType="submit"
         type="primary"
         loading={isPending}
+        style={{ marginTop: 20 }}
 
         // onClick={() => console.log({ errors })}
       >
