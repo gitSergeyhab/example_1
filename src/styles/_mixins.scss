@@ -1,0 +1,18 @@
+@use 'sass:color';
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin hover-effect($color) {
+  &:hover {
+    background-color: color.adjust($color, $lightness: -10%);
+  }
+}
+
+@mixin test {
+  color: white;
+  background-color: #000;
+}

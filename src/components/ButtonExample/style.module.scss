@@ -1,0 +1,37 @@
+// @use '@/styles/_variables' as *;
+// @use '@/styles/_mixins' as mix;
+
+.button1 {
+  background-color: $primary-color; // Используем глобальную переменную
+  color: white;
+  padding: $base-padding;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    // background-color: darken($primary-color, 10%);
+    background-color: color.adjust($primary-color, $lightness: -10%);
+  }
+}
+
+// В любом файле Button.module.scss
+// .button {
+//   @include flex-center;
+//   @include test;
+
+//   background: $primary-color;
+//   padding: 12px 24px;
+
+//   &:hover {
+//     background: darken($primary-color, 10%);
+//   }
+// }
+
+.button {
+  @include flex-center;
+  background-color: $primary-color;
+  padding: $base-padding;
+
+  @include hover-effect($primary-color);
+}
