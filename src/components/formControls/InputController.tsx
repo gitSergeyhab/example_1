@@ -24,6 +24,7 @@ export const InputController = <T extends FieldValues>({
   error,
   type,
   label,
+  ...props
 }: InputControllerProps<T>) => {
   return (
     <>
@@ -32,10 +33,15 @@ export const InputController = <T extends FieldValues>({
         name={name}
         control={control}
         render={({ field }) => (
-          <Input type={type} {...field} status={error ? 'error' : undefined} />
+          <Input
+            type={type}
+            {...field}
+            {...props}
+            status={error ? 'error' : undefined}
+          />
         )}
       />
-      <p>{error || 'nope'}</p>
+      {error && <p>{error}</p>}
     </>
   );
 };
