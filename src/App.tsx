@@ -7,6 +7,7 @@ import '@/styles/globalStyles.scss';
 import { Clients } from './modules/clients/Clients';
 import { Forms } from './modules/forms/Forms';
 import { ExpandableTable } from './modules/expandableTable/ExpandableTable';
+import { Graphics } from './modules/graphics/Graphics.tsX';
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
             <li>
               <Link to="/ExpandableTable">ExpandableTable</Link>
             </li>
+            <li>
+              <Link to="/graph">graph</Link>
+            </li>
           </ul>
         </nav>
         <Routes>
@@ -33,6 +37,7 @@ function App() {
           <Route path="/clients" element={<Clients />} />
           <Route path="/forms" element={<Forms />} />
           <Route path="/ExpandableTable" element={<ExpandableTable />} />
+          <Route path="/graph" element={<Graphics />} />
         </Routes>
       </BrowserRouter>
     </>
