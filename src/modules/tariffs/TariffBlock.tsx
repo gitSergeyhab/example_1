@@ -79,3 +79,5 @@ export const TariffBlock: FC = () => {
     </>
   );
 };
+
+export default TariffBlock;

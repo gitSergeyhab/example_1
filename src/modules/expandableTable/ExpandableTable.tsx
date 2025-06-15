@@ -143,3 +143,5 @@ export const ExpandableTable: React.FC = () => {
     </div>
   );
 };
+
+export default ExpandableTable;
