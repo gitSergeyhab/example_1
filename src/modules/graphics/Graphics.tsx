@@ -1,3 +1,4 @@
+import { ExampleBarChart } from './EchartsBar';
 import { InteractiveChart } from './ToggleableCombinedChart';
 
 export const Graphics = () => {
@@ -5,6 +6,7 @@ export const Graphics = () => {
     <div>
       <h1>Graphics</h1>
       <InteractiveChart />
+      <ExampleBarChart />
     </div>
   );
 };

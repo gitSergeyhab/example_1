@@ -7,7 +7,7 @@ import '@/styles/globalStyles.scss';
 import { Clients } from './modules/clients/Clients';
 import { Forms } from './modules/forms/Forms';
 import { ExpandableTable } from './modules/expandableTable/ExpandableTable';
-import { Graphics } from './modules/graphics/Graphics.tsX';
+import { Graphics } from './modules/graphics/Graphics.tsx';
 
 function App() {
   return (
