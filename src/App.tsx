@@ -1,47 +1,101 @@
-import { BrowserRouter, Link, Route, Routes } from 'react-router';
+import { type FC } from 'react';
+import { Suspense } from 'react';
+import {
+  createBrowserRouter,
+  Link,
+  Outlet,
+  RouterProvider,
+  type RouteObject,
+} from 'react-router';
+
 import './App.css';
-import { TariffBlock } from './modules/tariffs/TariffBlock';
 import 'antd/dist/reset.css';
-
 import '@/styles/globalStyles.scss';
-import { Clients } from './modules/clients/Clients';
-import { Forms } from './modules/forms/Forms';
-import { ExpandableTable } from './modules/expandableTable/ExpandableTable';
-import { Graphics } from './modules/graphics/Graphics.tsx';
+// import { Clients } from './modules/clients/Clients';
+// import { Forms } from './modules/forms/Forms';
+// import { ExpandableTable } from './modules/expandableTable/ExpandableTable';
+// import { Graphics } from './modules/graphics/Graphics.tsx';
+import { routerConfig, userPathDict, type Role } from './routerConfig';
 
-function App() {
-  return (
-    <>
-      <BrowserRouter>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Тарифы</Link>
-            </li>
-            <li>
-              <Link to="/clients">Клиенты</Link>
-            </li>
-            <li>
-              <Link to="/forms">Формы</Link>
-            </li>
-            <li>
-              <Link to="/ExpandableTable">ExpandableTable</Link>
-            </li>
-            <li>
-              <Link to="/graph">graph</Link>
-            </li>
-          </ul>
-        </nav>
-        <Routes>
-          <Route path="/" element={<TariffBlock />} />
-          <Route path="/clients" element={<Clients />} />
-          <Route path="/forms" element={<Forms />} />
-          <Route path="/ExpandableTable" element={<ExpandableTable />} />
-          <Route path="/graph" element={<Graphics />} />
-        </Routes>
-      </BrowserRouter>
-    </>
-  );
+interface LazyRouteProps {
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
 }
+
+const LazyRoute: FC<LazyRouteProps> = ({
+  children,
+  fallback = <div>Загрузка...</div>,
+}) => {
+  return <Suspense fallback={fallback}>{children}</Suspense>;
+};
+
+const useUserRole = (): Role | undefined => {
+  if (Math.random() > 0.33) {
+    return 'admin';
+  }
+  if (Math.random() > 0.5) {
+    return 'user';
+  }
+
+  return undefined;
+};
+
+const App = () => {
+  const userRole = useUserRole();
+  const allowedPaths = userPathDict[userRole || 'user'];
+
+  const childRoutes: RouteObject[] = allowedPaths.map((path) => {
+    const Component = routerConfig[path];
+
+    return {
+      path,
+      element: (
+        <LazyRoute>
+          <Component />
+        </LazyRoute>
+      ),
+    };
+  });
+
+  const mainRoute: RouteObject[] = [
+    {
+      path: '/',
+      element: (
+        <div>
+          {userRole || 'user'}
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Тарифы</Link>
+              </li>
+              <li>
+                <Link to="/clients">Клиенты</Link>
+              </li>
+              <li>
+                <Link to="/forms">Формы</Link>
+              </li>
+              <li>
+                <Link to="/ExpandableTable">ExpandableTable</Link>
+              </li>
+              <li>
+                <Link to="/graph">graph</Link>
+              </li>
+            </ul>
+          </nav>
+          <Outlet />
+        </div>
+      ),
+      children: childRoutes,
+    },
+    {
+      path: '*',
+      element: <div>404</div>,
+    },
+  ];
+
+  const router = createBrowserRouter(mainRoute);
+
+  return <RouterProvider router={router} />;
+};
 
 export default App;

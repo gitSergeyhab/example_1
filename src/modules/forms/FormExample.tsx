@@ -56,8 +56,6 @@ export const FormExample: React.FC<FormExampleProps> = ({
     setIsPriceDisabled(Boolean(isFree));
   }, [isFree, selectedPointId, points, setValue]);
 
-  // const subData =
-
   return (
     <form style={{ height: '100%' }} onSubmit={handleSubmit(onSubmit)}>
       <div

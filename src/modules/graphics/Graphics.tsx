@@ -10,3 +10,5 @@ export const Graphics = () => {
     </div>
   );
 };
+
+export default Graphics;
